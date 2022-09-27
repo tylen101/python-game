@@ -56,7 +56,6 @@ class Player(pygame.sprite.Sprite):
     if self.selected_tool == 'axe':
       for tree in self.tree_sprites.sprites():
         if tree.rect.collidepoint(self.target_pos):
-          print(tree.health)
           tree.damage()
       # for tree in self.tree_sprites.sprites():
         # if tree.rect.collidepoint(self.target_pos):
