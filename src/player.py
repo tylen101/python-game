@@ -1,11 +1,11 @@
 import pygame
 from settings import *
 from support import *
-from os import cpu_count, path
+from os import path
 from timer import Timer
 
 class Player(pygame.sprite.Sprite):
-  def __init__(self, pos, group, collision_sprites):
+  def __init__(self, pos, group, collision_sprites, tree_sprites):
     super().__init__(group)
 
 
@@ -46,8 +46,27 @@ class Player(pygame.sprite.Sprite):
     self.seed_index = 0
     self.selected_seed = self.seeds[self.seed_index]
 
+    # interaction
+    self.tree_sprites = tree_sprites
+
   def use_tool(self):
-    pass
+    if self.selected_tool == 'hoe':
+      pass
+
+    if self.selected_tool == 'axe':
+      for tree in self.tree_sprites.sprites():
+        if tree.rect.collidepoint(self.target_pos):
+          print(tree.health)
+          tree.damage()
+      # for tree in self.tree_sprites.sprites():
+        # if tree.rect.collidepoint(self.target_pos):
+          # tree.damage()
+
+    if self.selected_tool == 'water':
+      pass
+
+  def get_target_pos(self):
+    self.target_pos = self.rect.center + PLAYER_TOOL_OFFSET[self.status.split('_')[0]]
 
   def use_seed(self):
     pass
@@ -126,7 +145,7 @@ class Player(pygame.sprite.Sprite):
       self.status = self.status.split('_')[0] + '_idle'
 
       # tool use
-      if self.timers['tool use'].active:
+    if self.timers['tool use'].active:
         self.status = self.status.split('_')[0] + '_' + self.selected_tool
 
   def update_timers(self):
@@ -154,8 +173,6 @@ class Player(pygame.sprite.Sprite):
             self.rect.centery = self.hitbox.centery
             self.pos.y = self.hitbox.centery
 
-
-
   def move(self, dt):
     # normalize the vector
     if self.direction.magnitude() > 0:
@@ -176,5 +193,7 @@ class Player(pygame.sprite.Sprite):
       self.input()
       self.get_status()
       self.update_timers()
+      self.get_target_pos()
+
       self.move(dt)
       self.animate(dt)
