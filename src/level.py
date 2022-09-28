@@ -7,7 +7,7 @@ from os import path
 from pytmx.util_pygame import load_pygame
 from support import *
 from transition import Transition
-
+from soil import SoilLayer
 
 class Level:
   def __init__(self):
@@ -23,6 +23,7 @@ class Level:
     self.setup()
     self.overlay = Overlay(self.player)
     self.transition = Transition(self.reset, self.player)
+    soil_layer = SoilLayer(self.all_sprites)
 
   def setup(self):
     # load map
