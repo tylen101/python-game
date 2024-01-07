@@ -106,7 +106,13 @@ class Player(pygame.sprite.Sprite):
       if keys[pygame.K_w]:
         self.direction.y = -1
         self.status = 'up'
+      elif keys[pygame.K_UP]:
+        self.direction.y = -1
+        self.status = 'up'
       elif keys[pygame.K_s]:
+        self.direction.y = 1
+        self.status = 'down'
+      elif keys[pygame.K_DOWN]:
         self.direction.y = 1
         self.status = 'down'
       else:
@@ -115,6 +121,12 @@ class Player(pygame.sprite.Sprite):
       if keys[pygame.K_a]:
         self.direction.x = -1
         self.status = 'left'
+      elif keys[pygame.K_LEFT]:
+        self.direction.x = -1
+        self.status = 'left'
+      elif keys[pygame.K_RIGHT]:
+        self.direction.x = 1
+        self.status = 'right'
       elif keys[pygame.K_d]:
         self.direction.x = 1
         self.status = 'right'
